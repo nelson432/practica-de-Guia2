@@ -1,0 +1,32 @@
+name: Suite de regresión
+
+on: [push]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: OneDrive/Escritorio/HELEN
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Instalar navegadores de Playwright
+        run: npx playwright install --with-deps
+
+      - name: Ejecutar pruebas Playwright
+        run: npx playwright test
+
+      - name: Ejecutar pruebas Jest
+        run: npx jest
